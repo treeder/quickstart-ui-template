@@ -1,0 +1,54 @@
+
+extends layout.pug
+
+block content
+    <div class="main-width">
+        <div class="px-4 py-5 my-5 text-center">
+            <h1 class="display-5 fw-bold">The Best App</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">The app to end all apps</p>
+                    <form class="form-inline my-2 my-lg-0" action="javascript:void(0);" style="width:100%;">
+                <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+                    <div class="" style=" flex-grow: 4; margin-right: 12px;">
+                        <input id="hero-search-input" style="width:100%;" class="form-control mr-sm-2" type="search" placeholder="Enter search text" aria-label="Search">
+                    </div>
+                    <div class="">
+                        <button id="hero-search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    script.
+        document.getElementById("hero-search-button").addEventListener('click', ()=>{
+            let input = document.getElementById("hero-search-input")
+            window.location.href = `/tokens/${input.value}`
+        })
+    style.
+
+        img.logo {
+            width: 400px;
+        }
+
+    div(x-data="{}")
+        input(type="text" id="msginput" x-ref="msginput")
+        button(x-on:click="postMsg($refs.msginput.value)").btn.btn-primary Submit
+
+
+    script.
+        // could probably host this remotely
+        //- import {zapi} from '/assets/js/api.js'
+
+        function postMsg(msg){
+            zapi('/v1/msg', {method:'POST', body: {msg: msg}})
+        }
+
+    div
+        h2 Messages
+        each m in msgs
+            div
+                p #{m.msg}
+
+

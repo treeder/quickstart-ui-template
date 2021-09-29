@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The easiest way to add tokens to your wallet.">
+
+    <link rel="icon" type="image/png" href="../../assets/images/icon-512x512.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    script(src="/assets/js/api.js")
+
+    //- script(type="module").
+    //-     // could probably host this remotely
+    //-     import {zapi} from '/assets/js/api.js'
+
+    //- firebase compat library
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth-compat.js"></script>
+    script.
+        let fbConfig = window.fbc
+        console.log("CONFIG:", fbConfig)
+        //- can't seem to share a variable from the module script in head.pug...
+        fbConfig = {
+            apiKey: "AIzaSyAPjHm4NQe2DqKnyGdbn-nxuZm5c3qMPqc",
+            authDomain: "temp-81271.firebaseapp.com",
+            projectId: "temp-81271",
+            storageBucket: "temp-81271.appspot.com",
+            messagingSenderId: "31719621318",
+            appId: "1:31719621318:web:be3dfff5fc3474d04bcdc7"
+            };
+        const firebaseApp = firebase.initializeApp(fbConfig);
+
+        //- to set api URL in env var
+        const ENV = ('!{process.env.NODE_ENV || "dev"}');
+        const PROD = ENV === "prod"
+        var API_URL = '!{process.env.API_URL ? process.env.API_URL.replace(/\/$/, "") : ""}';
+        if(!API_URL){
+            API_URL = PROD ? 'https://api.whatever.com' : 'http://localhost:8080';
+        }
+
+
+    script(type="module").
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPjHm4NQe2DqKnyGdbn-nxuZm5c3qMPqc",
+            authDomain: "temp-81271.firebaseapp.com",
+            projectId: "temp-81271",
+            storageBucket: "temp-81271.appspot.com",
+            messagingSenderId: "31719621318",
+            appId: "1:31719621318:web:be3dfff5fc3474d04bcdc7"
+        };
+        window.fbc = firebaseConfig
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <div class="container-fluid main-width">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/images/icon-512x512.png" style="height: 50px;" />
+                TokenTapper
+            </a>
+            button(class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation")
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        a(href="/signin") Signin
+    </ul>
+
+    </div>
+        </div>
+
+    </nav>
