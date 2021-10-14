@@ -1,7 +1,11 @@
+import { auth } from './firebase.js'
+// import { getAuth } from 'https://cdn.jsdelivr.net/npm/firebase@^9.1.2/firebase-auth.js/+esm'
+
+let apiURL = 'https://treeder-temp-jrw9wvhvq6-8080.githubpreview.dev/' // can we get this dynamically somehow?
+apiURL = apiURL.replace(/\/$/, "")
 
 // zapi calls the zeromint API with auth token if logged in
-async function zapi(path, np = { method: 'GET', body: {}, formData: null, headers: {} }) {
-    let apiURL = API_URL;
+export default async function zapi(path, np = { method: 'GET', body: {}, formData: null, headers: {} }) {
     let headers = np.headers;
     if (!headers) {
         headers = {}
@@ -9,8 +13,7 @@ async function zapi(path, np = { method: 'GET', body: {}, formData: null, header
     if (!headers['Content-Type']) {
         headers['Content-Type'] = 'application/json'
     }
-    console.log("YO 3")
-    let user = firebase.auth().currentUser;
+    let user = auth.currentUser;
     if (user != null) {
         let token = await user.getIdToken();
         headers['Authorization'] = "Bearer " + token;
@@ -25,7 +28,7 @@ async function zapi(path, np = { method: 'GET', body: {}, formData: null, header
     } else if (!(np.method === 'GET' || np.method === 'HEAD')) {
         data.body = JSON.stringify(np.body);
     }
-    console.log("CLIENT zapi:", path, headers)
+    // console.log("CLIENT zapi:", path, headers)
     let response = await fetch(apiURL + path, data);
     let j = await response.json();
     if (response.status >= 400) {
@@ -46,3 +49,6 @@ class ApiError extends Error {
         return `${this.message}`;
     }
 }
+
+export { zapi };
+

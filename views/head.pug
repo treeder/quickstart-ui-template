@@ -15,23 +15,23 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <script src="//unpkg.com/alpinejs" defer></script>
 
-    script(src="/assets/js/api.js")
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@^2.0.0-beta.57/dist/themes/light.css">
+    //- <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.57/dist/shoelace.js/+esm"></script>
+
+    //- script(type="module" src="/assets/js/api.js")
 
     //- script(type="module").
     //-     // could probably host this remotely
     //-     import {zapi} from '/assets/js/api.js'
 
     //- firebase compat library
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-auth-compat.js"></script>
     script.
-        let fbConfig = window.fbc
-        console.log("CONFIG:", fbConfig)
         //- can't seem to share a variable from the module script in head.pug...
-        fbConfig = {
+        const fbConfig = {
             apiKey: "AIzaSyAPjHm4NQe2DqKnyGdbn-nxuZm5c3qMPqc",
             authDomain: "temp-81271.firebaseapp.com",
             projectId: "temp-81271",
@@ -50,31 +50,33 @@
         }
 
 
-    script(type="module").
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+    //- script(type="module").
+    //-     // Import the functions you need from the SDKs you need
+    //-     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+    //-     // TODO: Add SDKs for Firebase products that you want to use
+    //-     // https://firebase.google.com/docs/web/setup#available-libraries
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAPjHm4NQe2DqKnyGdbn-nxuZm5c3qMPqc",
-            authDomain: "temp-81271.firebaseapp.com",
-            projectId: "temp-81271",
-            storageBucket: "temp-81271.appspot.com",
-            messagingSenderId: "31719621318",
-            appId: "1:31719621318:web:be3dfff5fc3474d04bcdc7"
-        };
-        window.fbc = firebaseConfig
+    //-     // Your web app's Firebase configuration
+    //-     const firebaseConfig = {
+    //-         apiKey: "AIzaSyAPjHm4NQe2DqKnyGdbn-nxuZm5c3qMPqc",
+    //-         authDomain: "temp-81271.firebaseapp.com",
+    //-         projectId: "temp-81271",
+    //-         storageBucket: "temp-81271.appspot.com",
+    //-         messagingSenderId: "31719621318",
+    //-         appId: "1:31719621318:web:be3dfff5fc3474d04bcdc7"
+    //-     };
+    //-     window.fbc = firebaseConfig
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+    //-     // Initialize Firebase
+    //-     const app = initializeApp(firebaseConfig);
 
 
 </head>
 
 <body>
 
+    script(type="module").
+        import '/assets/components/signin-or-out.js'
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
@@ -89,11 +91,27 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        a(href="/signin") Signin
-    </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            signin-or-out
+
+        </ul>
 
     </div>
         </div>
 
     </nav>
+
+    script(type="module").
+        import {auth} from '/assets/js/firebase.js'
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js'
+        onAuthStateChanged(auth, (user) => {
+            console.log("STATE CHANGED:", user)
+            if (user) {
+                const uid = user.uid;
+
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+

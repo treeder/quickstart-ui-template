@@ -23,9 +23,11 @@ block content
 
     script.
         document.getElementById("hero-search-button").addEventListener('click', ()=>{
+            console.log("clicked")
             let input = document.getElementById("hero-search-input")
             window.location.href = `/tokens/${input.value}`
         })
+
     style.
 
         img.logo {
@@ -34,15 +36,39 @@ block content
 
     div(x-data="{}")
         input(type="text" id="msginput" x-ref="msginput")
-        button(x-on:click="postMsg($refs.msginput.value)").btn.btn-primary Submit
+        button#msgsubmit.btn.btn-primary Submit
 
 
-    script.
-        // could probably host this remotely
-        //- import {zapi} from '/assets/js/api.js'
+    script(type="module").
+        import zapi from '/assets/js/api.js'
+        // todo: make make a api-toast that will auto toast api errors
+        import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@^2.0.0-beta.57/dist/components/alert/alert.js/+esm';
 
-        function postMsg(msg){
-            zapi('/v1/msg', {method:'POST', body: {msg: msg}})
+        let b = document.getElementById('msgsubmit')
+        b.addEventListener("click", postMsg)
+
+        async function postMsg(){
+            let msg = document.getElementById('msginput').value
+            try {
+                await zapi('/v1/msg', {method:'POST', body: {msg: msg}})
+                window.location.reload()
+            }catch(e){
+                notify(`${e}`)
+            }
+        }
+        function notify(message, type = 'danger', icon = 'info-circle', duration = 5000) {
+            const alert = Object.assign(document.createElement('sl-alert'), {
+            type: type,
+            closable: true,
+            duration: duration,
+            innerHTML: `
+                <sl-icon name="${icon}"></sl-icon>
+                ${message}
+            `
+            });
+
+            document.body.append(alert);
+            return alert.toast();
         }
 
     div

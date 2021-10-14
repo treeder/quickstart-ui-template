@@ -1,16 +1,16 @@
 {
-  "name": "tokentapper-web",
-  "description": "TokenTapper web app",
+  "name": "fastapp",
+  "description": "App starting template",
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "fastify": "^3.21.0",
     "fastify-static": "^4.2.3",
     "node-fetch": "^3.0.0",
     "point-of-view": "^4.15.2",
     "pug": "^3.0.2"
   },
-  "devDependencies": {},
   "private": true,
   "scripts": {
     "dev": "fastify start --watch app.js",

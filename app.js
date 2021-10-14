@@ -28,7 +28,11 @@ export default async function plugin(fastify, options) {
         })
     })
 
-    fastify.get('/abc', function (req, reply) {
+    fastify.get('/signin', function (req, reply) {
+        reply.view('/views/signin.pug')
+    })
+    // login is temporary until codespaces fixes it
+    fastify.get('/login', function (req, reply) {
         reply.view('/views/signin.pug')
     })
 
