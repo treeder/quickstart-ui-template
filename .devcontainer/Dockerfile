@@ -9,3 +9,5 @@ FROM mcr.microsoft.com/vscode/devcontainers/universal:1-focal
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 #
 # USER codespace
+
+RUN npm install fastify-cli --global
