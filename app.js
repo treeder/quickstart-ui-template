@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import pointOfView from 'point-of-view';
 import pug from 'pug';
-import { api, apiUrl } from './src/api.js'
+import { api, apiURL } from './src/api.js'
 
 export default async function plugin(fastify, options) {
 
@@ -21,10 +21,17 @@ export default async function plugin(fastify, options) {
     })
 
     fastify.get('/', async function (req, reply) {
-        let msgsR = await api('get', `${apiUrl()}/v1/msgs`)
+        let msgsR = await api('get', `${apiURL}/v1/msgs`)
         let msgs = msgsR.messages
         reply.view('/views/index.pug', {
             msgs: msgs,
+        })
+    })
+
+    fastify.get('/assets/js/api.js', async function (req, reply) {
+        reply.header('Content-Type', 'text/javascript')
+        reply.view('/assets/js/api.js.pug', {
+            apiURL: apiURL,
         })
     })
 

@@ -1,10 +1,8 @@
+
+
 import { auth } from './firebase.js'
-// import { getAuth } from 'https://cdn.jsdelivr.net/npm/firebase@^9.1.2/firebase-auth.js/+esm'
 
-let apiURL = 'https://treeder-temp-jrw9wvhvq6-8080.githubpreview.dev/' // can we get this dynamically somehow?
-apiURL = apiURL.replace(/\/$/, "")
-
-// zapi calls the zeromint API with auth token if logged in
+// zapi calls the API with auth token if logged in
 export default async function zapi(path, np = { method: 'GET', body: {}, formData: null, headers: {} }) {
     let headers = np.headers;
     if (!headers) {

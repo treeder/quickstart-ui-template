@@ -37,7 +37,4 @@ export async function api(method, url, data) {
     return await res.json()
 }
 
-export function apiUrl() {
-    // const prod = (window.location.hostname.includes('tokentapper.com') || window.location.hostname.includes('web.app'));
-    return apiURL;
-}
+export { apiURL }

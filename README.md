@@ -1,7 +1,14 @@
 # temp-ui
 
-How fast can I get a front end running.
+Create a `secrets/dev.env` file and put in the API URL:
 
-backend: https://github.com/treeder/temp
+```
+export API_URL=http://localhost:8080
+```
 
-* Throw images and what not in /assets
+Then:
+
+```sh
+source secrets/dev.env
+make run
+```
