@@ -28,13 +28,7 @@ block content
             window.location.href = `/tokens/${input.value}`
         })
 
-    style.
-
-        img.logo {
-            width: 400px;
-        }
-
-    div(x-data="{}")
+    div.main-width
         input(type="text" id="msginput" x-ref="msginput")
         button#msgsubmit.btn.btn-primary Submit
 
@@ -71,7 +65,7 @@ block content
             return alert.toast();
         }
 
-    div
+    div.main-width
         h2 Messages
         each m in msgs
             div
