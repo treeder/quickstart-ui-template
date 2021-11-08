@@ -1,5 +1,7 @@
 # temp-ui
 
+[API template](https://github.com/treeder/flap-api-template)
+
 Create a `secrets/dev.env` file and put in the API URL:
 
 ```
