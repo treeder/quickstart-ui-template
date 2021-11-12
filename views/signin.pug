@@ -2,6 +2,10 @@
 extends layout.pug
 
 block content
+    <script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-auth-compat.js"></script>
+    script.
+        const firebaseApp = firebase.initializeApp(fbConfig);
 
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
@@ -9,7 +13,6 @@ block content
     h2 Signin
 
     div(id="firebaseui-auth-container").my-5
-
 
     script.
 

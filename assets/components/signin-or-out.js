@@ -1,10 +1,6 @@
 import { html, css, LitElement } from 'https://cdn.jsdelivr.net/npm/lit@^2/+esm' // 'https://cdn.skypack.dev/lit'
-// import 'https://cdn.jsdelivr.net/npm/@material/mwc-linear-progress@^0.25.0/+esm';
-import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@^2.0.0-beta.57/dist/components/button/button.js/+esm'
-// import Decimal from 'https://cdn.skypack.dev/decimal.js';
-// import { auth } from '../js/firebase.js'
-import { auth } from '/assets/js/firebase.js'
-import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js'
+import 'https://cdn.jsdelivr.net/npm/@material/mwc-button@^0.25.0/+esm';
+import { auth, onAuthStateChanged } from '/assets/js/firebase.js'
 
 
 export class SigninOrOut extends LitElement {
@@ -68,9 +64,9 @@ export class SigninOrOut extends LitElement {
             return html`<mwc-linear-progress indeterminate></mwc-linear-progress>`;
         }
         if (this.signedIn) {
-            return html`<sl-button type="default" @click=${this.signOut}>Sign out</sl-button>`
+            return html`<mwc-button outlined @click=${this.signOut}>Sign out</mwc-button>`
         }
-        return html`<sl-button type="primary" @click=${this.signIn}>Sign in</sl-button>`
+        return html`<mwc-button unelevated @click=${this.signIn}>Sign in</mwc-button>`
     }
 
     signIn() {
