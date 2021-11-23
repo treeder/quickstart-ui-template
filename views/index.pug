@@ -2,7 +2,7 @@
 extends layout.pug
 
 block content
-    <div class="main-width">
+    div.main-width
         <div class="px-4 py-5 my-5 text-center">
             <h1 class="display-5 fw-bold">The Best App</h1>
             <div class="col-lg-6 mx-auto">
@@ -19,56 +19,55 @@ block content
                 </form>
             </div>
         </div>
-    </div>
 
-    script.
-        document.getElementById("hero-search-button").addEventListener('click', ()=>{
-            console.log("clicked")
-            let input = document.getElementById("hero-search-input")
-            window.location.href = `/tokens/${input.value}`
-        })
+        script.
+            document.getElementById("hero-search-button").addEventListener('click', ()=>{
+                console.log("clicked")
+                let input = document.getElementById("hero-search-input")
+                window.location.href = `/tokens/${input.value}`
+            })
 
-    div.main-width
-        input(type="text" id="msginput" x-ref="msginput")
-        button#msgsubmit.btn.btn-primary Submit
+        div
+            input(type="text" id="msginput" x-ref="msginput")
+            button#msgsubmit.btn.btn-primary Submit
 
 
-    script(type="module").
-        import zapi from '/assets/js/api.js'
-        // todo: make make a api-toast that will auto toast api errors
-        import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@^2.0.0-beta.57/dist/components/alert/alert.js/+esm';
+        script(type="module").
+            import zapi from '/assets/js/api.js'
+            // todo: make make a api-toast that will auto toast api errors
+            import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@^2.0.0-beta.57/dist/components/alert/alert.js/+esm';
 
-        let b = document.getElementById('msgsubmit')
-        b.addEventListener("click", postMsg)
+            let b = document.getElementById('msgsubmit')
+            b.addEventListener("click", postMsg)
 
-        async function postMsg(){
-            let msg = document.getElementById('msginput').value
-            try {
-                await zapi('/v1/msg', {method:'POST', body: {msg: msg}})
-                window.location.reload()
-            }catch(e){
-                notify(`${e}`)
+            async function postMsg(){
+                let msg = document.getElementById('msginput').value
+                try {
+                    await zapi('/v1/msg', {method:'POST', body: {msg: msg}})
+                    window.location.reload()
+                }catch(e){
+                    notify(`${e}`)
+                }
             }
-        }
-        function notify(message, type = 'danger', icon = 'info-circle', duration = 5000) {
-            const alert = Object.assign(document.createElement('sl-alert'), {
-            type: type,
-            closable: true,
-            duration: duration,
-            innerHTML: `
-                <sl-icon name="${icon}"></sl-icon>
-                ${message}
-            `
-            });
+            function notify(message, type = 'danger', icon = 'info-circle', duration = 5000) {
+                const alert = Object.assign(document.createElement('sl-alert'), {
+                type: type,
+                closable: true,
+                duration: duration,
+                innerHTML: `
+                    <sl-icon name="${icon}"></sl-icon>
+                    ${message}
+                `
+                });
 
-            document.body.append(alert);
-            return alert.toast();
-        }
+                document.body.append(alert);
+                return alert.toast();
+            }
 
-    div.main-width
-        h2 Messages
-        each m in msgs
-            div
-                p #{m.msg}
+        div
+            h2 Messages
+            each m in msgs
+                div
+                    p #{m.msg}
 
 
