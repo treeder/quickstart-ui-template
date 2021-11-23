@@ -57,17 +57,3 @@
         </div>
 
     </nav>
-
-    script(type="module").
-        import {auth,onAuthStateChanged} from '/assets/js/firebase.js'
-        onAuthStateChanged(auth, (user) => {
-            console.log("STATE CHANGED:", user)
-            if (user) {
-                const uid = user.uid;
-
-            } else {
-                // User is signed out
-                // ...
-            }
-        });
-
