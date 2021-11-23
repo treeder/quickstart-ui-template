@@ -1,5 +1,5 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js'
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js'
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js'
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js'
 
 // Initialize Firebase
 console.log("INITIALIZING FIREBASE", fbConfig)
