@@ -60,4 +60,28 @@ export default async function plugin(fastify, options) {
         })
     })
 
+    fastify.setNotFoundHandler(function (request, reply) {
+        console.log("not found handler")
+        reply
+            .code(404)
+            //   .type('text/plain')
+            .view('/views/404.pug')
+    })
+
+    fastify.setErrorHandler(function (error, request, reply) {
+        console.log("error handler", error)
+        request.log.warn(error)
+        let statusCode = error.statusCode >= 400 ? error.statusCode : 500
+        if (statusCode === 404) {
+            reply
+                .code(statusCode)
+                //   .type('text/plain')
+                .view('/views/404.pug')
+            return
+        }
+        reply
+            .code(statusCode)
+            .view('/views/error.pug', { message: statusCode >= 500 ? 'Internal server error' : error.message })
+    })
+
 }

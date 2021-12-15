@@ -31,10 +31,30 @@ export async function api(method, url, data) {
 
     if (!res.ok) {
         let json = await res.json()
-        throw `${res.status} - ${json.error.message}`
+        throw new ApiError(res.status, json.error.message)
     }
 
     return await res.json()
+}
+
+
+class ApiError extends Error {
+    constructor(status, message) {
+        super(message);
+        this.status = status;
+    }
+
+    get code() {
+        return this.status
+    }
+
+    get statusCode() {
+        return this.status
+    }
+
+    toString() {
+        return `${this.message}`;
+    }
 }
 
 export { apiURL }
