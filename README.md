@@ -2,15 +2,16 @@
 
 [API template](https://github.com/treeder/flap-api-template)
 
-Create a `secrets/dev.env` file and put in the API URL:
+Create a `.env` file and put in:
 
 ```
-export API_URL=http://localhost:8080
+API_URL=http://localhost:8080
+G_PROJECT_ID=
+G_KEY=
 ```
 
 Then:
 
 ```sh
-source secrets/dev.env
 make run
 ```
