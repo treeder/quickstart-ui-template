@@ -4,14 +4,18 @@ const prod = process.env.NODE_ENV === 'production';
 console.log("PROD?", prod)
 const apiURL = process.env.API_URL ? process.env.API_URL.replace(/\/$/, "") : 'http://localhost:8080';
 
-export async function api(method, url, data) {
+export async function api(url, np = { method: 'GET', body: {}, formData: null, headers: {}, sessionCookie: '' }) {
 
+    let headers = {
+        'content-type': 'application/json'
+    }
+    if (np.sessionCookie && np.sessionCookie !== '') {
+        headers['Authorization'] = `Cookie ${np.sessionCookie}`
+    }
     const res = await fetch(url, {
-        method: method,
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: data && JSON.stringify(data)
+        method: np.method,
+        headers: headers,
+        body: np.body && JSON.stringify(body)
     });
 
     // if the request came from a <form> submission, the browser's default
@@ -36,7 +40,6 @@ export async function api(method, url, data) {
 
     return await res.json()
 }
-
 
 class ApiError extends Error {
     constructor(status, message) {
