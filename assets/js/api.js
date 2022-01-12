@@ -1,5 +1,3 @@
-
-
 import { auth } from './firebase.js'
 
 // zapi calls the API with auth token if logged in
@@ -26,15 +24,23 @@ export default async function zapi(path, np = { method: 'GET', body: {}, formDat
     } else if (!(np.method === 'GET' || np.method === 'HEAD')) {
         data.body = JSON.stringify(np.body);
     }
-    // console.log("CLIENT zapi:", path, headers)
-    let response = await fetch(apiURL + path, data);
-    let j = await response.json();
-    if (response.status >= 400) {
-        // then we got an error
-        throw new ApiError(response.status, j.error.message);
+    try {
+        let response = await fetch(apiURL + path, data);
+        console.log("RESPONSE STATUS:", response.status)
+        switch (response.status) {
+            case 413: // too large
+                throw new ApiError(response.status, "Request too large")
+        }
+        let j = await response.json();
+        if (response.status >= 400) {
+            // then we got an error
+            throw new ApiError(response.status, j.error.message);
+        }
+        return j;
+    } catch (e) {
+        console.log("CAUGHT ERROR:", e)
+        throw e
     }
-    // todo: Catch error!
-    return j;
 }
 
 class ApiError extends Error {
