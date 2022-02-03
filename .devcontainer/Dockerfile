@@ -10,4 +10,5 @@ FROM mcr.microsoft.com/vscode/devcontainers/universal:1-focal
 #
 # USER codespace
 
+RUN nvm install v17
 RUN npm install fastify-cli --global

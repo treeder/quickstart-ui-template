@@ -21,7 +21,7 @@ export default async function plugin(fastify, options) {
     })
 
     fastify.get('/', async function (req, reply) {
-        let msgsR = await api('get', `${apiURL}/v1/msgs`)
+        let msgsR = await api( `${apiURL}/v1/msgs`)
         let msgs = msgsR.messages
         reply.view('/views/index.pug', {
             msgs: msgs,

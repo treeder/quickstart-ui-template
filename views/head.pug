@@ -31,30 +31,29 @@
 
 </head>
 
-<body>
+body
 
     script(type="module").
         import '/assets/components/signin-or-out.js'
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    nav(class="navbar navbar-expand-lg navbar-light bg-light")
 
-        <div class="container-fluid main-width">
-            <a class="navbar-brand" href="/">
-                <img src="/assets/images/icon-512x512.png" style="height: 50px;" />
-                TokenTapper
-            </a>
+        div(class="container-fluid main-width")
+            a(class="navbar-brand" href="/")
+                img(src="/assets/images/icon-512x512.png" style="height: 50px;")
+                //- span TokenTapper
             button(class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation")
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            signin-or-out
-
-        </ul>
-
-    </div>
-        </div>
-
-    </nav>
+                span(class="navbar-toggler-icon")
+            div(class="collapse navbar-collapse" id="navbarSupportedContent")
+                ul(class="navbar-nav me-auto mb-2 mb-lg-0")            
+                    li.nav-item
+                        div#autocomplete
+                    li.nav-item
+                        a.nav-link(href="/new") New
+                    li.nav-item
+                        a.nav-link(href="/things") List
+                    li.nav-item
+                        a.nav-link(href="/things?archived=true") Archive
+                signin-or-out
