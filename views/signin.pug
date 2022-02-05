@@ -2,8 +2,8 @@
 extends layout.pug
 
 block content
-    <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-auth-compat.js"></script>
     script.
         const firebaseApp = firebase.initializeApp(fbConfig);
 
@@ -35,7 +35,7 @@ block content
                 },
             },
             signInSuccessUrl: '/',
-        // Other config options...
+            // Other config options...
         });
         
 
@@ -43,6 +43,16 @@ block content
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function cookieDomain() {
+            let domain = window.location.hostname
+            if (window.location.hostname.includes('githubpreview.dev')) {
+                //- domain = 'githubpreview.dev'
+            } else if (window.location.hostname.includes('zeromint.com')) {
+                domain = 'zeromint.com'
+            }
+            return domain
         }
 
         async function doSession(authResult){
@@ -60,15 +70,21 @@ block content
 
             let userID = authResult.user.uid      
             let cookie = await zapi(`/v1/session`, {method:'POST', 
-            headers: {
-                'Content-Type': 'application/json'
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
                 },
-            body: JSON.stringify({idToken: idToken, csrfToken: csrfToken})
+                body: JSON.stringify({idToken: idToken, csrfToken: csrfToken})
             })
-            console.log("Cookie got",cookie);
+            console.log("Cookie got",cookie);            
             console.log("updated user", userID)
             // setting cookie for widget
-            document.cookie = `userID=${userID}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${86400 * 90}`
-            document.cookie = `session=${cookie['cookie']}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${cookie['expires']}`
-            window.location.href = redirect
+            let uc = `userID=${userID}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${86400 * 90}`
+            document.cookie = uc
+            let sc = `session=${cookie['cookie']}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${cookie['expires']}`
+            console.log(uc)
+            console.log(sc)
+            document.cookie = sc
+            // TODO: save redirect so can return to previous page
+            //- window.location.href = '/' // redirect
         }

@@ -75,8 +75,21 @@ export class SigninOrOut extends LitElement {
 
     async signOut() {
         this.fetching = true
+        document.cookie = `userID=;  SameSite=None; Secure; domain=${this.cookieDomain()}; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`
+        document.cookie = `session=;  SameSite=None; Secure; domain=${this.cookieDomain()}; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`
         await auth.signOut()
         this.fetching = false
+    }
+
+    // todo: put cookie stuff from here and signin.pug into a shared hosted lib (cookie monster)
+    cookieDomain() {
+        let domain = window.location.hostname
+        if (window.location.hostname.includes('githubpreview.dev')) {
+            //- domain = 'githubpreview.dev'
+        } else if (window.location.hostname.includes('zeromint.com')) {
+            domain = 'zeromint.com'
+        }
+        return domain
     }
 }
 

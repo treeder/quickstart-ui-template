@@ -10,7 +10,8 @@ export default async function zapi(path, np = { method: 'GET', body: {}, formDat
         headers['Content-Type'] = 'application/json'
     }
     let user = auth.currentUser;
-    if (user != null) {
+    console.log("CURRENT USER:", user)
+    if (user != null && !headers['Authorization']) {
         let token = await user.getIdToken();
         headers['Authorization'] = "Bearer " + token;
     }
