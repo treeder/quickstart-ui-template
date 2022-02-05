@@ -4,20 +4,21 @@ const prod = process.env.NODE_ENV === 'production';
 console.log("PROD?", prod)
 const apiURL = process.env.API_URL ? process.env.API_URL.replace(/\/$/, "") : 'http://localhost:8080';
 
-export async function api(url, np = { method: 'GET', body: null, formData: null, headers: {}, sessionCookie: '' }) {
-    let method = np.method.toUpperCase()
-    let headers = {
+export async function api(url, { method = 'GET', body = null, formData = null, headers = {}, sessionCookie = '' }) {
+    // console.log("np:", np)
+    method = method.toUpperCase()
+    headers = {
         'content-type': 'application/json'
     }
-    if (np.sessionCookie && np.sessionCookie !== '') {
-        headers['Authorization'] = `Cookie ${np.sessionCookie}`
+    if (sessionCookie && sessionCookie !== '') {
+        headers['Authorization'] = `Cookie ${sessionCookie}`
     }
 
     let fetchData = {
         method: method,
         headers: headers
     }
-    if (np.body) {
+    if (body) {
         fetchData.body = JSON.stringify(np.body)
     }
     const res = await fetch(url, fetchData);

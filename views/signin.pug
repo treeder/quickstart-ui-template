@@ -14,7 +14,8 @@ block content
 
     div(id="firebaseui-auth-container").my-5
 
-    script.
+    script(type="module").
+        import zapi from '/assets/js/api.js'
 
         var ui = new firebaseui.auth.AuthUI(firebaseApp.auth());
         ui.start('#firebaseui-auth-container', {
@@ -23,18 +24,51 @@ block content
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             ],
             callbacks: {
-            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-            // User successfully signed in.
-            // Return type determines whether we continue the redirect automatically
-            // or whether we leave that to developer to handle.
-            return true;
+                signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                    doSession(authResult)
+                    return false;
+                },
+                uiShown: function() {
+                // The widget is rendered.
+                // Hide the loader.
+                //- document.getElementById('loader').style.display = 'none';
+                },
             },
-            uiShown: function() {
-            // The widget is rendered.
-            // Hide the loader.
-            //- document.getElementById('loader').style.display = 'none';
-            },
-        },
             signInSuccessUrl: '/',
         // Other config options...
         });
+        
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        async function doSession(authResult){
+            let idToken = await authResult.user.getIdToken()
+            const csrfToken = getCookie('csrfToken')            
+            //- let r = await zapi("/v1/session" {
+            //-     method: 'POST',
+            //-     headers: {
+            //-     'Content-Type': 'application/json'
+            //-     },
+            //-     body: JSON.stringify({idToken: idToken, csrfToken: csrfToken}),
+            //- })
+            //- console.log("SESSION RESULT:", r)
+            //- window.location.href = '/'
+
+            let userID = authResult.user.uid      
+            let cookie = await zapi(`/v1/session`, {method:'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify({idToken: idToken, csrfToken: csrfToken})
+            })
+            console.log("Cookie got",cookie);
+            console.log("updated user", userID)
+            // setting cookie for widget
+            document.cookie = `userID=${userID}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${86400 * 90}`
+            document.cookie = `session=${cookie['cookie']}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${cookie['expires']}`
+            window.location.href = redirect
+        }

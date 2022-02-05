@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import pointOfView from 'point-of-view';
 import pug from 'pug';
 import { api, apiURL } from './src/api.js'
+import fastifyCookie from 'fastify-cookie'
 
 export default async function plugin(fastify, options) {
 
@@ -13,6 +14,7 @@ export default async function plugin(fastify, options) {
             ejs: pug,
         }
     })
+    fastify.register(fastifyCookie)
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     fastify.register(fastifyStatic, {
@@ -21,7 +23,8 @@ export default async function plugin(fastify, options) {
     })
 
     fastify.get('/', async function (req, reply) {
-        let msgsR = await api( `${apiURL}/v1/msgs`)
+
+        let msgsR = await api(`${apiURL}/v1/msgs`, { sessionCookie: req.cookies.session })
         let msgs = msgsR.messages
         reply.view('/views/index.pug', {
             msgs: msgs,
@@ -43,22 +46,8 @@ export default async function plugin(fastify, options) {
         reply.view('/views/signin.pug')
     })
 
-    fastify.get('/tokens/:symbol', async function (req, reply) {
-        console.log("PARAMS:", req.params)
-        let symbol = req.params.symbol
-        let amount = req.query.amount
-        let to = req.query.to
-        console.log("about to get")
-        let tokenR = await api('get', `${apiUrl()}/v1/tokens/${symbol}`)
-        console.log("after get")
-        let token = tokenR.token
-        reply.view('/src/pages/tokens/:id/index.pug', {
-            title: token.symbol,
-            t: token,
-            to: to || '',
-            amount: amount || '',
-        })
-    })
+
+
 
     fastify.setNotFoundHandler(function (request, reply) {
         console.log("not found handler")

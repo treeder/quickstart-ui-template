@@ -6,6 +6,7 @@
   "dependencies": {
     "dotenv": "^16.0.0",
     "fastify": "^3.21.0",
+    "fastify-cookie": "^5.5.0",
     "fastify-static": "^4.2.3",
     "node-fetch": "^3.0.0",
     "point-of-view": "^5.1.0",
