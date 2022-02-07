@@ -8,6 +8,11 @@ This a UI template using:
 
 ## Getting Started
 
+```sh
+nvm install v17
+npm install fastify-cli --global
+```
+
 After setting up your API from: [API template](https://github.com/treeder/flap-api-template)
 
 Create a `.env` file and put in:
