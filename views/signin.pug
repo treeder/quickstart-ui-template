@@ -10,9 +10,10 @@ block content
     <script src="https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css" />
 
-    h2 Signin
+    div.main-width
+        h2 Signin
 
-    div(id="firebaseui-auth-container").my-5
+        div(id="firebaseui-auth-container").my-5
 
     script(type="module").
         import zapi from '/assets/js/api.js'
@@ -26,7 +27,7 @@ block content
             callbacks: {
                 signInSuccessWithAuthResult: function(authResult, redirectUrl) {
                     doSession(authResult)
-                    return false;
+                    return true
                 },
                 uiShown: function() {
                 // The widget is rendered.
@@ -82,8 +83,8 @@ block content
             let uc = `userID=${userID}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${86400 * 90}`
             document.cookie = uc
             let sc = `session=${cookie['cookie']}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${cookie['expires']}`
-            console.log(uc)
-            console.log(sc)
+            //- console.log(uc)
+            //- console.log(sc)
             document.cookie = sc
             // TODO: save redirect so can return to previous page
             //- window.location.href = '/' // redirect
