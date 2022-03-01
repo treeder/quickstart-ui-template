@@ -3,11 +3,11 @@ import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-analytics.js";
 
 // Initialize Firebase
-console.log("INITIALIZING FIREBASE", fbConfig)
 const app = initializeApp(fbConfig);
-const analytics = getAnalytics();
 const auth = getAuth(app)
-
-console.log('fbapp ready:', app)
+const analytics = null;
+if (firebaseConfig.measurementId) {
+    analytics = getAnalytics();
+}
 
 export { app, auth, onAuthStateChanged, analytics }
