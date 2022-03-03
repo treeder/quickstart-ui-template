@@ -9,14 +9,15 @@ import fastifyCookie from 'fastify-cookie'
 
 export default async function plugin(fastify, options) {
 
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
     fastify.register(pointOfView, {
         engine: {
             ejs: pug,
         }
     })
     fastify.register(fastifyCookie)
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
     fastify.register(fastifyStatic, {
         root: path.join(__dirname, 'assets'),
         prefix: '/assets/', // optional: default '/'
