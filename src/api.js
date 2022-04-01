@@ -19,7 +19,7 @@ export async function api(url, { method = 'GET', body = null, formData = null, h
         headers: headers
     }
     if (body) {
-        fetchData.body = JSON.stringify(np.body)
+        fetchData.body = JSON.stringify(body)
     }
     const res = await fetch(url, fetchData);
 
