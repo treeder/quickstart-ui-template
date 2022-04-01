@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 const prod = process.env.NODE_ENV === 'production';
 console.log("PROD?", prod)
 const apiURL = process.env.API_URL ? process.env.API_URL.replace(/\/$/, "") : 'http://localhost:8080';
+console.log("API_URL:", apiURL)
 
 var defaultParams = { method: 'GET', body: null, formData: null, headers: {}, sessionCookie: '' }
 
