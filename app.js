@@ -61,7 +61,11 @@ export default async function plugin(fastify, options) {
     fastify.setErrorHandler(function (error, request, reply) {
         console.log("error handler", error)
         request.log.warn(error)
-        let statusCode = error.statusCode >= 400 ? error.statusCode : 500
+        let statusCode = error.statusCode || error.status
+        console.log(statusCode)
+        if (!statusCode) {
+            statusCode = 500
+        }
         if (statusCode === 404) {
             reply
                 .code(statusCode)
