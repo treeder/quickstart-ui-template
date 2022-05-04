@@ -9,7 +9,7 @@ This a UI template using:
 ## Getting Started
 
 ```sh
-nvm install v17
+nvm install 18
 npm install fastify-cli --global
 ```
 
