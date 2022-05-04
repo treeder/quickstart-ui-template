@@ -1,11 +1,10 @@
-// plugin.js
-import fastifyStatic from 'fastify-static';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import pointOfView from 'point-of-view';
-import pug from 'pug';
+import path from 'path'
+import { fileURLToPath } from 'url'
+import pointOfView from 'point-of-view'
+import pug from 'pug'
 import { api, apiURL } from './src/api.js'
-import fastifyCookie from 'fastify-cookie'
+import fastifyStatic from '@fastify/static'
+import fastifyCookie from '@fastify/cookie'
 
 export default async function plugin(fastify, options) {
 
