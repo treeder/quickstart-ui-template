@@ -41,7 +41,8 @@
 	],
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"GitHub.vscode-pull-request-github"
+		"GitHub.vscode-pull-request-github",
+		"runem.lit-plugin"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
