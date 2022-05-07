@@ -6,7 +6,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-
 const app = initializeApp(fbConfig);
 const auth = getAuth(app)
 var analytics = null;
-if (firebaseConfig.measurementId) {
+if (fbConfig.measurementId) {
     analytics = getAnalytics();
 }
 
