@@ -8,13 +8,13 @@ console.log("API_URL:", apiURL)
 var defaultParams = { method: 'GET', body: null, formData: null, headers: {}, sessionCookie: '' }
 
 export async function api(url, o = {}) {
-     o = Object.assign(defaultParams, o)
+    o = Object.assign(defaultParams, o)
     let method = o.method.toUpperCase()
     let headers = o.headers
     if (!headers['content-type']) {
         headers['content-type'] = 'application/json'
     }
-    f (o.sessionCookie && o.sessionCookie !== '') {
+    if (o.sessionCookie && o.sessionCookie !== '') {
         headers['Authorization'] = `Cookie ${o.sessionCookie}`
     }
 
