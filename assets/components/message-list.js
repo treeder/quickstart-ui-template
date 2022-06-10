@@ -73,7 +73,7 @@ export class MessageList extends LitElement {
         <small>${m.id}</small>
         </div>
         <div style="text-align:right;">
-            <mwc-icon-button icon="edit" key=${m.id} @click=${this.handleEdit}></mwc-icon-button>
+            <!-- <mwc-icon-button icon="edit" key=${m.id} @click=${this.handleEdit}></mwc-icon-button> -->
             <mwc-icon-button icon="delete" key=${m.id} @click=${this.handleDelete}></mwc-icon-button>
         </div>
         `)}
