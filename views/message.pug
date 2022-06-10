@@ -1,0 +1,19 @@
+
+extends layout.pug
+
+block content
+    div.container
+        h1 #{msg.msg}
+        small #{msg.id}
+
+        //- div
+        //-     message-form
+        div
+            message-page(msgID=`${msg.id}` id="mpage")
+
+        script(type="module").
+            import '/assets/components/message.js'
+
+            //- let mpage = document.querySelector("#mpage")
+            //- mpage.message = 
+

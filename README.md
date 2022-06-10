@@ -10,10 +10,11 @@ This a UI template using:
 
 ```sh
 nvm install 18
+npm install
 npm install fastify-cli --global
 ```
 
-After setting up your API from: [API template](https://github.com/treeder/flap-api-template)
+After setting up your API from: [API template](https://github.com/treeder/quickstart-api-template)
 
 Create a `.env` file and put in:
 
@@ -32,6 +33,5 @@ make run
 * Go to https://console.cloud.google.com/ , choose your firebase project
 * Go to Cloud run -> create service
 * Mostly defaults, but choose deploy from github and choose your repo
-    * And use this Dockerfile
-* Set `API_URL` to point to your API
-
+    * Use Dockerfile from this repo
+* Set `API_URL` env var in cloud run to point to your API
