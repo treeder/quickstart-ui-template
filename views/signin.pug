@@ -16,7 +16,7 @@ block content
         div(id="firebaseui-auth-container").my-5
 
     script(type="module").
-        import zapi from '/assets/js/api.js'
+        import api from '/assets/js/api.js'
 
         var ui = new firebaseui.auth.AuthUI(firebaseApp.auth());
         ui.start('#firebaseui-auth-container', {
@@ -59,7 +59,7 @@ block content
         async function doSession(authResult){
             let idToken = await authResult.user.getIdToken()
             const csrfToken = getCookie('csrfToken')            
-            //- let r = await zapi("/v1/session" {
+            //- let r = await api("/v1/session" {
             //-     method: 'POST',
             //-     headers: {
             //-     'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ block content
             //- window.location.href = '/'
 
             let userID = authResult.user.uid      
-            let cookie = await zapi(`/v1/session`, {method:'POST', 
+            let cookie = await api(`/v1/session`, {method:'POST', 
                 headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${idToken}`,

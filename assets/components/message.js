@@ -6,7 +6,7 @@ import 'https://cdn.jsdelivr.net/npm/@material/mwc-circular-progress@0/+esm'
 import 'https://cdn.jsdelivr.net/npm/@material/mwc-dialog@0/+esm'
 import { auth, onAuthStateChanged } from '/assets/js/firebase.js'
 import { sharedStyles } from './styles.js'
-import zapi from '/assets/js/api.js'
+import api from '/assets/js/api.js'
 import { snack } from 'https://cdn.jsdelivr.net/gh/treeder/web-components@0/tr-snack/tr-snack.js'
 import '/assets/components/message-form.js'
 
@@ -56,7 +56,7 @@ export class MessagePage extends LitElement {
     }
 
     async fetchData() {
-        let msgsR = await zapi(`/v1/msgs/${this.msgID}`)
+        let msgsR = await api(`/v1/msgs/${this.msgID}`)
         console.log("GOT MSGR:", msgsR)
         this.message = msgsR.message
     }
@@ -79,7 +79,7 @@ export class MessagePage extends LitElement {
     async postMsg() {
         let msg = this.renderRoot.querySelector('#msginput').value
         try {
-            await zapi('/v1/msgs', { method: 'POST', body: { msg: msg } })
+            await api('/v1/msgs', { method: 'POST', body: { msg: msg } })
             window.location.reload()
         } catch (e) {
             snack(`${e}`)
@@ -115,9 +115,9 @@ export class MessagePage extends LitElement {
         //     return;
         // }
         // textField.reportValidity();
-        let delR = await zapi(`/v1/msgs/${this.msgID}`, { method: 'DELETE', body: {} })
+        let delR = await api(`/v1/msgs/${this.msgID}`, { method: 'DELETE', body: {} })
         console.log(delR)
-        // let msgsR = await zapi('/v1/msgs', {})
+        // let msgsR = await api('/v1/msgs', {})
         // this.messages = msgsR.messages
 
         this.fetchData()

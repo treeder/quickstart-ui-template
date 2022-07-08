@@ -1,36 +1,57 @@
-const prod = process.env.NODE_ENV === 'production'
-console.log("PROD?", prod)
+const prod = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'prod';
+// // console.log("PROD?", prod)
 const apiURL = process.env.API_URL ? process.env.API_URL.replace(/\/$/, "") : 'http://localhost:8080';
-console.log("API_URL:", apiURL)
 
-var defaultParams = { method: 'GET', body: null, formData: null, headers: {}, sessionCookie: '' }
-
-export async function api(url, o = {}) {
-    o = Object.assign(defaultParams, o)
-    let method = o.method.toUpperCase()
-    let headers = o.headers
-    if (!headers['content-type']) {
-        headers['content-type'] = 'application/json'
+export async function api(
+    url,
+    {
+        method = "GET",
+        body = null,
+        formData = null,
+        headers = { "Content-Type": "application/json" },
+        sessionCookie = "",
+    },
+) {
+    method = method.toUpperCase();
+    //   let headers = {
+    //     "Content-Type": "application/json",
+    //   };
+    // console.log("COOKIE:", np.sessionCookie)
+    if (sessionCookie && sessionCookie !== "") {
+        headers["Authorization"] = `Cookie ${sessionCookie}`;
+        // headers['cookie'] = sessionCookie
+        // headers['Cookie'] = cookies;
     }
-    if (o.sessionCookie && o.sessionCookie !== '') {
-        headers['Authorization'] = `Cookie ${o.sessionCookie}`
-    }
-
     let fetchData = {
         method: method,
-        headers: headers
-    }
-    if (o.body) {
-        fetchData.body = JSON.stringify(o.body)
+        headers: headers,
+    };
+    if (body) {
+        fetchData.body = JSON.stringify(body);
     }
     const res = await fetch(url, fetchData);
 
+    // if the request came from a <form> submission, the browser's default
+    // behaviour is to show the URL corresponding to the form's "action"
+    // attribute. in those cases, we want to redirect them back to the
+    // /todos page, rather than showing the response
+    // if (res.ok && method !== 'GET') {// && request.headers.accept !== 'application/json') {
+    //     return {
+    //         status: 303,
+    //         headers: {
+    //             location: '/collections'
+    //         }
+    //     };
+    // }
+
+    // console.log("BODY:", await res.text())
+
     if (!res.ok) {
-        let json = await res.json()
-        throw new ApiError(res.status, json.error.message)
+        let json = await res.json();
+        throw new ApiError(res.status, json.error.message);
     }
 
-    return await res.json()
+    return await res.json();
 }
 
 class ApiError extends Error {
@@ -40,11 +61,11 @@ class ApiError extends Error {
     }
 
     get code() {
-        return this.status
+        return this.status;
     }
 
     get statusCode() {
-        return this.status
+        return this.status;
     }
 
     toString() {
@@ -52,4 +73,4 @@ class ApiError extends Error {
     }
 }
 
-export { apiURL }
+export { apiURL, ApiError }

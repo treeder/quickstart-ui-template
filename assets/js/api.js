@@ -1,7 +1,7 @@
 import { auth } from './firebase.js'
 
-// zapi calls the API with auth token if logged in
-export default async function zapi(path, np = { method: 'GET', body: {}, formData: null, headers: {}, sessionCookie: '' }) {
+// api calls the API with auth token if logged in
+export default async function api(path, np = { method: 'GET', body: {}, formData: null, headers: {}, sessionCookie: '' }) {
     let headers = np.headers;
     if (!headers) {
         headers = {}
@@ -9,7 +9,7 @@ export default async function zapi(path, np = { method: 'GET', body: {}, formDat
     if (!headers['Content-Type']) {
         headers['Content-Type'] = 'application/json'
     }
-    
+
     if (!headers['Authorization']) {
         // Cookie notes: cookies aren't passed in fetch by default: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
         // So we're doing some different things here.
@@ -74,5 +74,5 @@ export function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-export { zapi };
+export { api, ApiError };
 

@@ -6,7 +6,7 @@ import 'https://cdn.jsdelivr.net/npm/@material/mwc-circular-progress@0/+esm'
 import 'https://cdn.jsdelivr.net/npm/@material/mwc-dialog@0/+esm'
 import { auth, onAuthStateChanged } from '/assets/js/firebase.js'
 import { sharedStyles } from './styles.js'
-import zapi from '/assets/js/api.js'
+import api from '/assets/js/api.js'
 
 export class MessageList extends LitElement {
 
@@ -52,7 +52,7 @@ export class MessageList extends LitElement {
     }
 
     async fetchData() {
-        let msgsR = await zapi('/v1/msgs')
+        let msgsR = await api('/v1/msgs')
         this.messages = msgsR.messages
     }
 
@@ -130,9 +130,9 @@ export class MessageList extends LitElement {
         //     return;
         // }
         // textField.reportValidity();
-        let delR = await zapi(`/v1/msgs/${this.msgID}`, { method: 'DELETE', body: {} })
+        let delR = await api(`/v1/msgs/${this.msgID}`, { method: 'DELETE', body: {} })
         console.log(delR)
-        // let msgsR = await zapi('/v1/msgs', {})
+        // let msgsR = await api('/v1/msgs', {})
         // this.messages = msgsR.messages
 
         this.fetchData()
