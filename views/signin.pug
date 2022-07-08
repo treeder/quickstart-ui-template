@@ -27,7 +27,7 @@ block content
             callbacks: {
                 signInSuccessWithAuthResult: function(authResult, redirectUrl) {
                     doSession(authResult)
-                    return true
+                    return false
                 },
                 uiShown: function() {
                 // The widget is rendered.
@@ -87,5 +87,5 @@ block content
             //- console.log(sc)
             document.cookie = sc
             // TODO: save redirect so can return to previous page
-            //- window.location.href = '/' // redirect
+            window.location.href = '/' 
         }
