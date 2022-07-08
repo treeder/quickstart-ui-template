@@ -28,6 +28,11 @@ export class MessageForm extends LitElement {
             --mdc-icon-button-size: 24px;
             --mdc-icon-size: 20px;
         }
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
         `
     ]
 
@@ -56,7 +61,6 @@ export class MessageForm extends LitElement {
     async fetchData() {
         // let msgsR = await zapi('/v1/msgs')
         // this.messages = msgsR.messages
-
     }
 
     render() {
@@ -70,8 +74,11 @@ export class MessageForm extends LitElement {
         let val = this.message ? this.message.msg : ''
         console.log("VAL:", val)
         return html`
+        <div class="column">
         <mwc-textfield id="msginput" label="Enter a Message" outlined value=${val}></mwc-textfield>
+        <mwc-textfield id="imageField" type="file" accept="image/*,.mp4"></mwc-textfield>
         <mwc-button id="msgsubmit" @click=${this.postMsg} unelevated>Submit</mwc-button>
+        </div>
         `
     }
 
@@ -89,10 +96,34 @@ export class MessageForm extends LitElement {
             msg = this.message
         }
         msg.msg = text
+        let r = null
+
         try {
-            await zapi(`/v1/msgs${urlID}`, { method: 'POST', body: { msg: msg } })
-            window.location.reload()
+            let imageField = this.renderRoot.querySelector("#imageField")
+            let imf = imageField.formElement
+            if (imf.files && imf.files.length > 0) {
+                let file = imf.files[0]
+                // TODO: implement below commented file size check
+                //-  if (file.size > MAX_FILE_SIZE) {
+                //-     form.classList.add('invalid')
+                //-     let cii = document.getElementById("collection-image-invalid")
+                //-     cii.innerText = `File too big, max size is ${MAX_FILE_SIZE} by`
+                //-     cii.style.display = 'block';
+                //-     return
+                //- }
+                var data = new FormData();
+                data.append("json", JSON.stringify({ msg: msg }))
+                data.append("image", file)
+                console.log("about to upload image")
+                snack('Uploading...');
+                r = await zapi(`/v1/msgs${urlID}`, { method: "POST", headers: { 'Content-Type': 'multipart/form-data' }, formData: data })
+            } else {
+                r = await zapi(`/v1/msgs${urlID}`, { method: 'POST', body: { msg: msg } })
+            }
+            console.log(r)
+            // window.location.reload()
         } catch (e) {
+            console.log(e)
             snack(`${e}`)
         }
     }

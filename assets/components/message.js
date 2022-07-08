@@ -72,7 +72,6 @@ export class MessagePage extends LitElement {
         return html`
         <!-- <mwc-textfield id="msginput" label="Enter a Message" outlined></mwc-textfield> -->
         <mwc-button id="editbtn" @click=${this.handleEdit} >Edit</mwc-button>
-
         <message-form style="display:none;" id="mform"></message-form>
         `
     }

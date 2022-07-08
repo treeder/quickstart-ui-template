@@ -45,6 +45,12 @@ export default async function plugin(fastify, options) {
         reply.view('/views/signin.pug')
     })
 
+    fastify.get('/msgs/new', async function (req, reply) {
+        reply.view('/views/message-form.pug', {
+        })
+    })
+
+
     fastify.get('/msgs/:id', async function (req, reply) {
         let msgsR = await api(`${apiURL}/v1/msgs/${req.params['id']}`, { sessionCookie: req.cookies.session })
         let msg = msgsR.message
@@ -52,6 +58,7 @@ export default async function plugin(fastify, options) {
             msg: msg,
         })
     })
+
 
 
     fastify.setNotFoundHandler(function (request, reply) {

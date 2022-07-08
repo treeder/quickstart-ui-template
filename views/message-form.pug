@@ -1,0 +1,13 @@
+
+extends layout.pug
+
+block content
+    div.container
+
+        script(type="module").
+            import '/assets/components/message-form.js'
+
+        div
+            h2 New Message
+            message-form
+
