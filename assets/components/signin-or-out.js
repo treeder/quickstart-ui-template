@@ -70,7 +70,7 @@ export class SigninOrOut extends LitElement {
     }
 
     signIn() {
-        window.location.href = '/login'
+        window.location.href = `/login?redir=${window.location.href}`
     }
 
     async signOut() {
@@ -86,8 +86,8 @@ export class SigninOrOut extends LitElement {
         let domain = window.location.hostname
         if (window.location.hostname.includes('githubpreview.dev')) {
             //- domain = 'githubpreview.dev'
-        } else if (window.location.hostname.includes('zeromint.com')) {
-            domain = 'zeromint.com'
+        } else if (window.location.hostname.includes('yourdomain.com')) {
+            domain = 'yourdomain.com'
         }
         return domain
     }
