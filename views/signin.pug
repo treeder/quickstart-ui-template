@@ -86,6 +86,13 @@ block content
             //- console.log(uc)
             //- console.log(sc)
             document.cookie = sc
-            // TODO: save redirect so can return to previous page
-            window.location.href = '/' 
+            
+            const urlParams = new URLSearchParams(document.location.search)
+            console.log("URL PARAMS:", urlParams.get('adsf'), urlParams.get('redir'))
+            let redir = urlParams.get('redir')
+            if(redir){
+                window.location.href = redir
+                return 
+            }
+            window.location.href = '/'
         }
