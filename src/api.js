@@ -47,8 +47,13 @@ export async function api(
     // console.log("BODY:", await res.text())
 
     if (!res.ok) {
-        let json = await res.json();
-        throw new ApiError(res.status, json.error.message);
+         try {
+            let json = await res.json()
+            throw new ApiError(res.status, json.error.message)
+        } catch (e2) {
+            // can't parse json
+            throw new ApiError(res.status, res.statusText)
+        }
     }
 
     return await res.json();
