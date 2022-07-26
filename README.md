@@ -8,6 +8,12 @@ This a UI template using:
 
 ## Getting Started
 
+* Create a Firebase project
+* Create a "web app" in Firebase
+* Copy the `firebaseConfig` JavaScript code it gives and replace it in [head.pug](https://github.com/treeder/quickstart-ui-template/blob/main/views/head.pug)
+
+Then run it:
+
 ```sh
 nvm install 18
 npm install
