@@ -1,6 +1,6 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
-import pointOfView from 'point-of-view'
+import pointOfView from '@fastify/view'
 import pug from 'pug'
 import { api, apiURL } from './src/api.js'
 import fastifyStatic from '@fastify/static'
