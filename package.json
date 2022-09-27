@@ -4,14 +4,13 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "@fastify/cookie": "^6.0.0",
-    "@fastify/static": "^5.0.2",
+    "@fastify/cookie": "^8.0.0",
+    "@fastify/static": "^6.0.2",
+    "@fastify/view": "^7.0.0",
     "dotenv": "^16.0.0",
-    "fastify": "^3.21.0",
-    "fastify-static": "^4.2.3",
-    "node-fetch": "^3.0.0",
-    "point-of-view": "^5.1.0",
-    "pug": "^3.0.2"
+    "fastify": "^4.6.0",
+    "pug": "^3.0.2",
+    "eta": "^1.12.3"
   },
   "private": true,
   "scripts": {

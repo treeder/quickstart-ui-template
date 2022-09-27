@@ -1,12 +1,13 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js"
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.8.0/firebase-auth.js'
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-analytics.js"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js"
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js'
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js"
+
 
 // Initialize Firebase
-const app = initializeApp(fbConfig);
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 var analytics = null;
-if (fbConfig.measurementId) {
+if (firebaseConfig.measurementId) {
     analytics = getAnalytics();
 }
 

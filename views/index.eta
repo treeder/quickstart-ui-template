@@ -1,11 +1,6 @@
+<% layout('layout.eta') %>
 
-extends layout.pug
-
-block content
-    div.container
-        <div>
-        | Check <a href="/eta">eta version here</a>
-        </div>
+<div class="container">
         <div class="px-4 py-5 my-5 text-center">
             <h1 class="display-5 fw-bold">The Best App</h1>
             <div class="col-lg-6 mx-auto">
@@ -23,22 +18,25 @@ block content
             </div>
         </div>
 
-        script.
+        <script>
             document.getElementById("hero-search-button").addEventListener('click', ()=>{
                 console.log("clicked")
                 let input = document.getElementById("hero-search-input")
                 window.location.href = `/tokens/${input.value}`
             })
+        </script>
 
-        div
-            message-form
+        <div>
+            <message-form>
+</div>
 
-
-        script(type="module").
+        <script type="module">
             import '/assets/components/message-list.js'
             import '/assets/components/message-form.js'
+        </script>
 
-        div
-            h2 Messages
-            message-list
+        <div>
+            <h2> Messages</h2>
+            <message-list>
 
+</div>

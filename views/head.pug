@@ -21,15 +21,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     script.
-        //- can't seem to share a variable from the module script in head.pug...
-        const fbConfig = {
-            apiKey: "AIzaSyAPjHm4NQe2DqKnyGdbn-nxuZm5c3qMPqc",
-            authDomain: "temp-81271.firebaseapp.com",
-            projectId: "temp-81271",
-            storageBucket: "temp-81271.appspot.com",
-            messagingSenderId: "31719621318",
-            appId: "1:31719621318:web:be3dfff5fc3474d04bcdc7"
-            };
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfigDev = {
+            apiKey: "AIzaSyAWPobkAcu4PbZCAU8wn5cZRD93Px-__Ko",
+            authDomain: "quickstart-e64d7.firebaseapp.com",
+            projectId: "quickstart-e64d7",
+            storageBucket: "quickstart-e64d7.appspot.com",
+            messagingSenderId: "708751994541",
+            appId: "1:708751994541:web:8c105e8db402c06e5a2024"
+        };
+
+        var firebaseConfig = firebaseConfigDev
+        const isProd = #{process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production'}
+        if(isProd){
+            // add a firebaseConfigProd and uncomment below to use a production environment
+            //- firebaseConfig = firebaseConfigProd
+        }
 
 
 </head>
