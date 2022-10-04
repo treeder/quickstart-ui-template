@@ -23,7 +23,7 @@ export class MessagePage extends LitElement {
         }
         .gridc {
             display: grid;
-            grid-template-columns: 2fr, 1fr;
+            grid-template-columns: 2fr 1fr;
             grid-gap: 10px;
             --mdc-icon-button-size: 24px;
             --mdc-icon-size: 20px;

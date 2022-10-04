@@ -16,7 +16,7 @@ block content
         div(id="firebaseui-auth-container").my-5
 
     script(type="module").
-        import api from '/assets/js/api.js'
+        import api from '/public/js/api.js'
 
         var ui = new firebaseui.auth.AuthUI(firebaseApp.auth());
         ui.start('#firebaseui-auth-container', {

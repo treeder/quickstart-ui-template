@@ -1,0 +1,108 @@
+<% layout('layout.eta') %>
+
+<script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
+<script>
+  const firebaseApp = firebase.initializeApp(firebaseConfig);
+</script>
+<script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+<div class="container">
+  <h2>Signin</h2>
+  <div class="my-5" id="firebaseui-auth-container"></div>
+  
+    If you forgot password click <a href="/forgot">here</a>
+  
+</div>
+
+<script type="module">
+  import api from '/public/js/api.js'
+
+  var ui = new firebaseui.auth.AuthUI(firebaseApp.auth());
+  ui.start('#firebaseui-auth-container', {
+    signInOptions: [
+      // List of OAuth providers supported.
+      firebase.auth.EmailAuthProvider.PROVIDER_ID, firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        if (!authResult.user.emailVerified) {
+          authResult.user.sendEmailVerification();
+          document.getElementById('firebaseui-auth-container').innerHTML = "Verfication link has just been sent, please verify your email address";
+          return false;
+        }
+        doSession(authResult)
+        return false
+      },
+      uiShown: function() {
+        // The widget is rendered.
+        // Hide the loader.
+        //- document.getElementById('loader').style.display = 'none';
+      },
+    },
+    signInSuccessUrl: '/',
+    // Other config options...
+  });
+
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  function cookieDomain() {
+    let domain = window.location.hostname
+    if (window.location.hostname.includes('githubpreview.dev')) {
+      //- domain = 'githubpreview.dev'
+    } else if (window.location.hostname.includes('yourdomain.com')) {
+      domain = 'yourdomain.com'
+    }
+    return domain
+  }
+
+  async function doSession(authResult) {
+    let idToken = await authResult.user.getIdToken()
+    const csrfToken = getCookie('csrfToken')
+    //- let r = await api("/v1/session" {
+    //-     method: 'POST',
+    //-     headers: {
+    //-     'Content-Type': 'application/json'
+    //-     },
+    //-     body: JSON.stringify({idToken: idToken, csrfToken: csrfToken}),
+    //- })
+    //- console.log("SESSION RESULT:", r)
+    //- window.location.href = '/'
+
+    let userID = authResult.user.uid
+    let cookie = await api(`/v1/session`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({
+        idToken: idToken,
+        csrfToken: csrfToken
+      })
+    })
+    console.log("Cookie got", cookie);
+    console.log("updated user", userID);
+    // setting cookie for widget
+    let uc = `userID=${userID}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${86400 * 90}`
+    document.cookie = uc
+    let sc = `session=${cookie['cookie']}; SameSite=None; Secure; domain=${cookieDomain()}; path=/; max-age=${cookie['expires']}`
+    //- console.log(uc)
+    //- console.log(sc)
+    document.cookie = sc
+
+    const urlParams = new URLSearchParams(document.location.search)
+    console.log("URL PARAMS:", urlParams.get('adsf'), urlParams.get('redir'))
+    let redir = urlParams.get('redir')
+    if (redir) {
+      window.location.href = redir
+      return
+    }
+    window.location.href = '/'
+  }
+</script>

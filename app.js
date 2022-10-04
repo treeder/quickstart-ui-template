@@ -25,19 +25,11 @@ export default async function plugin(fastify, options) {
 
     fastify.register(fastifyCookie)
     fastify.register(fastifyStatic, {
-        root: path.join(__dirname, 'assets'),
-        prefix: '/assets/', // optional: default '/'
+        root: path.join(__dirname, 'public'),
+        prefix: '/public/', // optional: default '/'
     })
 
     fastify.get('/', async function (req, reply) {
-        let msgsR = await api(`${apiURL}/v1/msgs`, { sessionCookie: req.cookies.session })
-        let msgs = msgsR.messages
-        return reply.view('/views/index.pug', {
-            msgs: msgs,
-        })
-    })
-
-    fastify.get('/eta', async function (req, reply) {
         let msgsR = await api(`${apiURL}/v1/msgs`, { sessionCookie: req.cookies.session })
         let msgs = msgsR.messages
         return reply.eta('/views/index.eta', {
@@ -45,19 +37,26 @@ export default async function plugin(fastify, options) {
         })
     })
 
-    fastify.get('/assets/js/api.js', async function (req, reply) {
-        reply.header('Content-Type', 'text/javascript')
-        return reply.view('/assets/js/api.js.pug', {
-            apiURL: apiURL,
+    fastify.get('/pug', async function (req, reply) {
+        let msgsR = await api(`${apiURL}/v1/msgs`, { sessionCookie: req.cookies.session })
+        let msgs = msgsR.messages
+        return reply.view('/views/index.pug', {
+            msgs: msgs,
         })
     })
 
+    fastify.get('/public/js/api.js', async function (req, reply) {
+        reply.header('Content-Type', 'text/javascript')
+        return reply.view('/public/js/api.js.pug', {
+            apiURL: apiURL,
+        })
+    })
     fastify.get('/signin', function (req, reply) {
-        return reply.view('/views/signin.pug')
+        return reply.eta('/views/signin.eta')
     })
     // login is temporary until codespaces fixes it
     fastify.get('/login', function (req, reply) {
-        return reply.view('/views/signin.pug')
+        return reply.eta('/views/signin.eta')
     })
 
     fastify.get('/msgs/new', async function (req, reply) {
