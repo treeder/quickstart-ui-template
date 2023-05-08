@@ -4,6 +4,7 @@ console.log("Starting up server")
 
 import Fastify from 'fastify'
 const fastify = Fastify({
+    http2: true,
     logger: true
 })
 
@@ -21,7 +22,9 @@ fastify.register(appService)
 // Run the server!
 let port = process.env.PORT || 3000;
 
-fastify.listen(port, '0.0.0.0', (err, address) => {
-    if (err) throw err
-    // Server is now listening on ${address}
+fastify.listen({ port: port, host: '0.0.0.0' }, (err, address) => {
+    if (err) {
+        fastify.log.error(err)
+        process.exit(1)
+    }
 })
